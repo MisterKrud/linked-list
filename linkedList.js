@@ -40,6 +40,31 @@ const linkedList = () => {
     }
   };
 
+
+  const insertAt = (value, index) => {
+    const newNode = node(value);
+    newNode.index = index
+    const rightNode = at(index);
+    const leftNode = at(index-1);
+    let current = newNode
+
+   
+    leftNode.next = newNode;
+     newNode.next = rightNode;
+     console.log(`leftNode: ${leftNode.value}`)
+     console.log(`rightNode: ${rightNode.value}`)
+      console.log(`newNode: ${newNode.value}`)
+     
+
+    while(current.next){
+      current = current.next;
+      current.index++
+    }
+
+    
+  }
+
+
   const size = () => n;
 
   const head = () => {
@@ -57,12 +82,15 @@ const linkedList = () => {
   };
 
   const at = (idx) => {
-    const current = iterate()
+    let current = preNode;
+    while (current.next) {
+      current = current.next;
       if (current.index === idx) {
         const atNode = current;
-        return atNode.value;
+        console.log(atNode)
+        return atNode;
       }
-    
+    }
   };
 
   const pop = () => {
@@ -90,25 +118,36 @@ const linkedList = () => {
 
 
   const find = (value) => {
-    const current = iterate()
+      let current = preNode;
+
+    while (current.next) {
+      current = current.next;
       if (current.value === value) {
         const matchingNode = current;
         return matchingNode.index
       }
-    
+    }
     return null;
     }
   
   const toString = () => {
+    let stringChain = ""
     let current = preNode.next;
 
-    while (current != null) {
-      console.log(`${current.value} -> ${current.index}`);
+    while (current) {
+      let nodeValue = current.value;   
+      stringChain = stringChain.concat(`( ${nodeValue} [${current.index}] ) -> `)
+      if(current.next === null){
+        stringChain = stringChain.concat(null)
+      }
       current = current.next;
     }
+
+    console.log(stringChain);
   };
 
-  return { prepend, append, toString, size, head, tail, at, pop, contains, find };
+
+  return { prepend, append, toString, size, head, tail, at, pop, contains, find, insertAt};
 };
 
 const node = (value = null, next = null) => {
@@ -118,6 +157,8 @@ const node = (value = null, next = null) => {
 };
 
 const list = linkedList();
+
+const printListItems = (() => {
 list.append("dog");
 list.append("cat");
 list.append("parrot");
@@ -126,31 +167,24 @@ list.append("snake");
 list.append("turtle");
 list.prepend("car");
 
-// console.log(list.append.newNode)
+
 
 console.log("toString:");
 console.log(list.toString());
 
-console.log(list.size());
-console.log(list.head());
-console.log(list.tail());
-console.log(list.at(5));
+console.log(`Size: ${list.size()}`);
+console.log(`Head: ${list.head()}`);
+console.log(`Tail: ${list.tail()}`);
+console.log(`List at 5: ${list.at(5)}`);
 list.pop();
 
-console.log(list.toString());
-console.log(list.contains("parrot"));
-console.log(list.contains("bike"));
+console.log(`Popped list: ${list.toString()}`);
+console.log(`Contains 'parrot': ${list.contains("parrot")}`);
+console.log(`Contains 'bike': ${list.contains("bike")}`);
 
-console.log(list.find("hamster"));
-console.log(list.find("engine"))
+console.log(`Find 'hamster': ${list.find("hamster")}`);
+console.log(`Find 'engine': ${list.find("engine")}`)
+list.insertAt("Lion", 3)
+console.log(list.toString())
 
-// const firstNode = node("One");
-
-// const secondNode = node("Two");
-// console.log(firstNode.value)
-// console.log(firstNode.next)
-// console.log(firstNode)
-// firstNode.next = "Two"
-// console.log({secondNode})
-
-//head.next = null
+})()
