@@ -104,6 +104,22 @@ const linkedList = () => {
     }
   };
 
+
+  const remove = (index) => {
+    let deletionNode = at(index);
+    const leftNode = at(index-1)
+    const rightNode = at(index+1)
+
+    leftNode.next = rightNode
+    let current = rightNode;
+    while(current.next){
+      current.index = current.index-1
+      current = current.next
+    }
+    deletionNode = null
+  }
+
+
   const contains = (value) => {
     let current = preNode;
 
@@ -143,11 +159,11 @@ const linkedList = () => {
       current = current.next;
     }
 
-    console.log(stringChain);
+    return stringChain
   };
 
 
-  return { prepend, append, toString, size, head, tail, at, pop, contains, find, insertAt};
+  return { prepend, append, toString, size, head, tail, at, pop, contains, find, insertAt, remove};
 };
 
 const node = (value = null, next = null) => {
@@ -185,6 +201,8 @@ console.log(`Contains 'bike': ${list.contains("bike")}`);
 console.log(`Find 'hamster': ${list.find("hamster")}`);
 console.log(`Find 'engine': ${list.find("engine")}`)
 list.insertAt("Lion", 3)
+console.log(list.toString())
+list.remove(3)
 console.log(list.toString())
 
 })()
