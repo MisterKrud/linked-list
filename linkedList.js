@@ -36,48 +36,60 @@ const linkedList = () => {
   const size = () => n;
 
   const head = () => {
-    const headNode = preNode.next
+    const headNode = preNode.next;
     return headNode.value;
-  }
-  
+  };
 
   const tail = () => {
     let current = preNode;
-    while(current.next) {
-        current = current.next
-        if (current.next === null){
-            const tailNode = current
-            return tailNode.value
-        }
-    
+    while (current.next) {
+      current = current.next;
+      if (current.next === null) {
+        const tailNode = current;
+        return tailNode.value;
+      }
     }
-  }
-
-
+  };
 
   const at = (idx) => {
     let current = preNode;
-    while(current.next){
-        current = current.next;
-        if(current.index === idx){
-            const atNode = current;
-            return atNode.value;
-        }
+    while (current.next) {
+      current = current.next;
+      if (current.index === idx) {
+        const atNode = current;
+        return atNode.value;
+      }
     }
-  }
+  };
 
- 
   const pop = () => {
-    
     let current = preNode;
-    while(current.next){
-        current = current.next
-        let currentNext = current.next
-        if(currentNext.next === null){
-            current.next = null
-        }
+    while (current.next) {
+      current = current.next;
+      let currentNext = current.next;
+      if (currentNext.next === null) {
+        current.next = null;
+      }
     }
-  }
+  };
+
+  const contains = (value) => {
+    let current = preNode;
+
+   
+      while (current.next) {
+        current = current.next;
+        if (current.value === value) {
+          
+          return true;
+        } 
+        
+        }
+        return false
+      }
+  
+   
+  
 
   const toString = () => {
     let current = preNode.next;
@@ -88,7 +100,7 @@ const linkedList = () => {
     }
   };
 
-  return { prepend, append, toString, size, head, tail, at, pop };
+  return { prepend, append, toString, size, head, tail, at, pop, contains };
 };
 
 const node = (value = null, next = null) => {
@@ -113,12 +125,14 @@ console.log("toString:");
 console.log(list.toString());
 
 console.log(list.size());
-console.log(list.head())
-console.log(list.tail())
-console.log(list.at(5))
-list.pop()
+console.log(list.head());
+console.log(list.tail());
+console.log(list.at(5));
+list.pop();
 
 console.log(list.toString());
+console.log(list.contains("parrot"));
+console.log(list.contains("bike"));
 
 // const firstNode = node("One");
 
