@@ -8,10 +8,7 @@ const linkedList = () => {
   const append = (value) => {
     const newNode = node(value);
     newNode.index = n;
-    let current = preNode;
-    while (current.next) {
-      current = current.next;
-    }
+    const current = iterate()
 
     if (current.next === null) {
       current.next = newNode;
@@ -19,6 +16,16 @@ const linkedList = () => {
     n++;
     return newNode;
   };
+
+
+  const iterate = () => {
+    let current = preNode;
+    while (current.next) {
+      current = current.next;
+     
+    }
+     return current
+  }
 
   const prepend = (value) => {
     const newNode = node(value);
@@ -41,25 +48,21 @@ const linkedList = () => {
   };
 
   const tail = () => {
-    let current = preNode;
-    while (current.next) {
-      current = current.next;
+   const current = iterate()
       if (current.next === null) {
         const tailNode = current;
         return tailNode.value;
       }
-    }
+    
   };
 
   const at = (idx) => {
-    let current = preNode;
-    while (current.next) {
-      current = current.next;
+    const current = iterate()
       if (current.index === idx) {
         const atNode = current;
         return atNode.value;
       }
-    }
+    
   };
 
   const pop = () => {
@@ -76,21 +79,26 @@ const linkedList = () => {
   const contains = (value) => {
     let current = preNode;
 
-   
-      while (current.next) {
-        current = current.next;
-        if (current.value === value) {
-          
-          return true;
-        } 
-        
-        }
-        return false
+    while (current.next) {
+      current = current.next;
+      if (current.value === value) {
+        return true;
       }
-  
-   
-  
+    }
+    return false;
+  };
 
+
+  const find = (value) => {
+    const current = iterate()
+      if (current.value === value) {
+        const matchingNode = current;
+        return matchingNode.index
+      }
+    
+    return null;
+    }
+  
   const toString = () => {
     let current = preNode.next;
 
@@ -100,14 +108,13 @@ const linkedList = () => {
     }
   };
 
-  return { prepend, append, toString, size, head, tail, at, pop, contains };
+  return { prepend, append, toString, size, head, tail, at, pop, contains, find };
 };
 
 const node = (value = null, next = null) => {
-  const getValue = () => value;
-  const getNext = () => next;
+  
 
-  return { value, next, getValue, getNext };
+  return { value, next };
 };
 
 const list = linkedList();
@@ -133,6 +140,9 @@ list.pop();
 console.log(list.toString());
 console.log(list.contains("parrot"));
 console.log(list.contains("bike"));
+
+console.log(list.find("hamster"));
+console.log(list.find("engine"))
 
 // const firstNode = node("One");
 
