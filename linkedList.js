@@ -8,7 +8,7 @@ const linkedList = () => {
   const append = (value) => {
     const newNode = node(value);
     newNode.index = n;
-    const current = iterate()
+    const current = iterate();
 
     if (current.next === null) {
       current.next = newNode;
@@ -17,112 +17,104 @@ const linkedList = () => {
     return newNode;
   };
 
-
   const iterate = () => {
     let current = preNode;
     while (current.next) {
       current = current.next;
-     
     }
-     return current
-  }
+    return current;
+  };
+
 
   const prepend = (value) => {
-    const newNode = node(value);
-    const rightNode = preNode.next;
-    newNode.next = rightNode;
-    preNode.next = newNode;
-    newNode.index = 0;
-    let current = newNode;
-    while (current.next != null) {
-      current = current.next;
-      current.index++;
-    }
+    insertAt(value, 0);
   };
 
 
   const insertAt = (value, index) => {
     const newNode = node(value);
-    newNode.index = index
+    newNode.index = index;
     const rightNode = at(index);
-    const leftNode = at(index-1);
-    let current = newNode
-
-   
-    leftNode.next = newNode;
-     newNode.next = rightNode;
-     console.log(`leftNode: ${leftNode.value}`)
-     console.log(`rightNode: ${rightNode.value}`)
-      console.log(`newNode: ${newNode.value}`)
-     
-
-    while(current.next){
-      current = current.next;
-      current.index++
+    let leftNode = at(index - 1);
+    if (leftNode == null) {
+      leftNode = preNode;
     }
+    let current = newNode;
 
-    
-  }
+    leftNode.next = newNode;
+    newNode.next = rightNode;
+
+    while (current.next) {
+      current = current.next;
+      current.index++;
+    }
+    n++
+  };
 
 
-  const size = () => n;
+  const size = () => n+1;
+
 
   const head = () => {
     const headNode = preNode.next;
     return headNode.value;
   };
 
+
   const tail = () => {
-   const current = iterate()
-      if (current.next === null) {
-        const tailNode = current;
-        return tailNode.value;
-      }
-    
+    const current = iterate();
+    if (current.next === null) {
+      const tailNode = current;
+      return tailNode;
+    }
   };
 
-  const at = (idx) => {
+  
+  const at = (index) => {
     let current = preNode;
     while (current.next) {
       current = current.next;
-      if (current.index === idx) {
-        const atNode = current;
-        console.log(atNode)
-        return atNode;
-      }
-    }
-  };
-
-  const pop = () => {
-    let current = preNode;
-    while (current.next) {
-      current = current.next;
-      let currentNext = current.next;
-      if (currentNext.next === null) {
-        current.next = null;
+      if (current.index === index) {
+        // const atNode = current;
+        return current;
       }
     }
   };
 
 
-  const remove = (index) => {
-    let deletionNode = at(index);
-    const leftNode = at(index-1)
-    const rightNode = at(index+1)
-
-    leftNode.next = rightNode
-    let current = rightNode;
-    while(current.next){
-      current.index = current.index-1
-      current = current.next
-    }
-    deletionNode = null
+  const pop = () =>{
+    remove(n)
   }
 
 
+  const remove = (index) => {
+    if(index<0 ||index >n) return null
+    let nodeToDelete = at(index)
+    let leftNode = at(index - 1);
+    let rightNode = at(index + 1);
+    if (index != n && index !=0) {
+      
+      console.log(`index: ${index}`);
+      leftNode.next = rightNode;
+      
+    } else if(index===0){
+      preNode.next = rightNode
+    }
+    else if(index===n) {
+      leftNode.next = null;
+     
+    }
+    let current = rightNode;
+      while (current) {
+        current.index = current.index - 1;
+        current = current.next;
+      
+    }
+    n--
+  };
+
   const contains = (value) => {
     let current = preNode;
-
     while (current.next) {
       current = current.next;
       if (current.value === value) {
@@ -132,77 +124,113 @@ const linkedList = () => {
     return false;
   };
 
-
   const find = (value) => {
-      let current = preNode;
-
+    let current = preNode;
     while (current.next) {
       current = current.next;
       if (current.value === value) {
         const matchingNode = current;
-        return matchingNode.index
+        return matchingNode.index;
       }
     }
     return null;
-    }
-  
-  const toString = () => {
-    let stringChain = ""
-    let current = preNode.next;
+  };
 
+  const toString = () => {
+    let stringChain = "";
+    let current = preNode.next;
     while (current) {
-      let nodeValue = current.value;   
-      stringChain = stringChain.concat(`( ${nodeValue} [${current.index}] ) -> `)
-      if(current.next === null){
-        stringChain = stringChain.concat(null)
+      let nodeValue = current.value;
+      stringChain = stringChain.concat(
+        `( ${nodeValue} [${current.index}] ) -> `
+      );
+      if (current.next === null) {
+        stringChain = stringChain.concat(null);
       }
       current = current.next;
     }
-
-    return stringChain
+    console.log(n)
+    return stringChain;
   };
 
-
-  return { prepend, append, toString, size, head, tail, at, pop, contains, find, insertAt, remove};
+  return {
+    prepend,
+    append,
+    toString,
+    size,
+    head,
+    tail,
+    at,
+    pop,
+    contains,
+    find,
+    insertAt,
+    remove,
+  };
 };
 
 const node = (value = null, next = null) => {
-  
-
   return { value, next };
 };
 
 const list = linkedList();
 
 const printListItems = (() => {
-list.append("dog");
-list.append("cat");
-list.append("parrot");
-list.append("hamster");
-list.append("snake");
-list.append("turtle");
-list.prepend("car");
+  list.append("dog");
+  list.append("cat");
+  list.append("parrot");
+  list.append("hamster");
+  list.append("snake");
+  list.append("turtle");
+  list.prepend("car");
 
+  console.log("toString 1:");
+  console.log(list.toString());
+console.log('------------')
+console.log('Size:')
+  console.log(list.size());
+  console.log()
+  console.log('Head:')
+  console.log(list.head());
+  console.log()
+  console.log('Tail:')
+console.log(list.tail())
+console.log()
+ 
+  console.log(`List at 5: `)
+  console.log(list.at(5));
+  list.pop();
+console.log('----------------')
+  console.log(`Popped list: `);
+  console.log(list.toString())
+  console.log()
 
+  console.log(`Contains 'parrot':`);
+  console.log(list.contains("parrot"))
+  console.log('Contains "bike:')
+  console.log(list.contains("bike"));
+  console.log()
+  console.log('-----------')
 
-console.log("toString:");
-console.log(list.toString());
-
-console.log(`Size: ${list.size()}`);
-console.log(`Head: ${list.head()}`);
-console.log(`Tail: ${list.tail()}`);
-console.log(`List at 5: ${list.at(5)}`);
-list.pop();
-
-console.log(`Popped list: ${list.toString()}`);
-console.log(`Contains 'parrot': ${list.contains("parrot")}`);
-console.log(`Contains 'bike': ${list.contains("bike")}`);
-
-console.log(`Find 'hamster': ${list.find("hamster")}`);
-console.log(`Find 'engine': ${list.find("engine")}`)
-list.insertAt("Lion", 3)
-console.log(list.toString())
-list.remove(3)
-console.log(list.toString())
-
-})()
+  console.log(`Find 'hamster':`);
+  console.log(list.find("hamster"))
+  console.log(`Find 'engine': `);
+  console.log(list.find("engine"))
+  console.log()
+  list.insertAt("Lion", 3);
+  console.log('---------------')
+  console.log("'Lion' inserted at 3")
+  console.log(list.toString());
+  console.log('Index 3 removed:')
+  list.remove(3);
+  console.log(list.toString());
+  console.log('Prepend "donkey"')
+  list.prepend("donkey");
+  console.log(list.toString());
+  console.log('Remove 0 (Donkey');
+  list.remove(0)
+  console.log(list.toString())
+  console.log('Rmove last item')
+  list.remove(5)
+  console.log(list.toString())
+})();
