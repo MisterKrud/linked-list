@@ -89,7 +89,6 @@ const linkedList = () => {
 
   const remove = (index) => {
     if(index<0 ||index >n) return null
-    let nodeToDelete = at(index)
     let leftNode = at(index - 1);
     let rightNode = at(index + 1);
     if (index != n && index !=0) {
@@ -173,64 +172,3 @@ const node = (value = null, next = null) => {
   return { value, next };
 };
 
-const list = linkedList();
-
-const printListItems = (() => {
-  list.append("dog");
-  list.append("cat");
-  list.append("parrot");
-  list.append("hamster");
-  list.append("snake");
-  list.append("turtle");
-  list.prepend("car");
-
-  console.log("toString 1:");
-  console.log(list.toString());
-console.log('------------')
-console.log('Size:')
-  console.log(list.size());
-  console.log()
-  console.log('Head:')
-  console.log(list.head());
-  console.log()
-  console.log('Tail:')
-console.log(list.tail())
-console.log()
- 
-  console.log(`List at 5: `)
-  console.log(list.at(5));
-  list.pop();
-console.log('----------------')
-  console.log(`Popped list: `);
-  console.log(list.toString())
-  console.log()
-
-  console.log(`Contains 'parrot':`);
-  console.log(list.contains("parrot"))
-  console.log('Contains "bike:')
-  console.log(list.contains("bike"));
-  console.log()
-  console.log('-----------')
-
-  console.log(`Find 'hamster':`);
-  console.log(list.find("hamster"))
-  console.log(`Find 'engine': `);
-  console.log(list.find("engine"))
-  console.log()
-  list.insertAt("Lion", 3);
-  console.log('---------------')
-  console.log("'Lion' inserted at 3")
-  console.log(list.toString());
-  console.log('Index 3 removed:')
-  list.remove(3);
-  console.log(list.toString());
-  console.log('Prepend "donkey"')
-  list.prepend("donkey");
-  console.log(list.toString());
-  console.log('Remove 0 (Donkey');
-  list.remove(0)
-  console.log(list.toString())
-  console.log('Rmove last item')
-  list.remove(5)
-  console.log(list.toString())
-})();
